@@ -12,22 +12,32 @@ import course.model.Session;
 
 @Service
 public class SessionManager {
-    private Base64Codec base64Codec = new Base64Codec();
+	private Base64Codec base64Codec = new Base64Codec();
 
-    @Autowired
-    private MongoSessionRepository sessionRepository;
+	@Autowired
+	private MongoSessionRepository sessionRepository;
 
-    public String startSession(String username) {
-        // get 32 byte random number. that's a lot of bits.
-        SecureRandom generator = new SecureRandom();
-        byte randomBytes[] = new byte[32];
-        generator.nextBytes(randomBytes);
+	public String startSession(String username) {
+		// get 32 byte random number. that's a lot of bits.
+		SecureRandom generator = new SecureRandom();
+		byte randomBytes[] = new byte[32];
+		generator.nextBytes(randomBytes);
 
-        String sessionId = base64Codec.encode(randomBytes);
+		String sessionId = base64Codec.encode(randomBytes);
 
-        Session session = new Session(sessionId, username);
-        sessionRepository.save(session);
+		Session session = new Session(sessionId, username);
+		sessionRepository.save(session);
 
-        return session.getSessionId();
-    }
+		return session.getSessionId();
+	}
+
+	public String findUserNameBySessionId(String sessionId) {
+		Session session = sessionRepository.findOne(sessionId);
+
+		return session == null ? null : session.getUsername();
+	}
+
+	public void endSession(String sessionId) {
+		sessionRepository.delete(sessionId);
+	}
 }

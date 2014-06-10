@@ -1,0 +1,18 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml11-thymeleaf-spring4-2.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome</title>
+</head>
+<body>
+    <p>
+        Welcome <span th:text="${username}">username</span>
+    </p>
+    <ul>
+        <li><a href="/" th:href="@{/}">Blog</a></li>
+        <li><a href="/logout" th:href="@{/logout}">Logout</a></li>
+        <li>Create a New Post (not yet implemented)</li>
+    </ul>
+</body>
+
+</html>
