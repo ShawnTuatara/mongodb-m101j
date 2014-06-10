@@ -1,7 +1,9 @@
 package course.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "sessions")
 public class Session {
     @Id
     private String sessionId;

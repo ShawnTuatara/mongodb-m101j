@@ -1,9 +1,20 @@
 M101J - Week 2 - Homework 2-3
 
+# Notes
+Implemented the homework with the following architecture:
+
+View - Thymeleaf / FreeMarker
+Controller - BlogController
+Service - UserManager / SessionManager
+DAO - MongoUserRepository / MongoSessionRepository
+
+I had to use FreeMarker to make the mongoProc tests pass. It was doing straight html validation against the template result. Couldn't "fake" it with Thymeleaf such that it would pass without breaking standards on xhtml5.
+
 # Included Spring Dependencies
 - Spring Boot Starter Web
 - Spring Boot Starter Data MongoDB
 - Spring Boot Starter Thymeleaf
+- Spring Boot Starter FreeMarker
 - Hibernate Validator
 
 # Configuration
