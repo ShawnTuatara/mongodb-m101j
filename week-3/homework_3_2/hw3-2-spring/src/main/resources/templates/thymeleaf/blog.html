@@ -1,0 +1,13 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml11-thymeleaf-spring4-2.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>My Blog</title>
+</head>
+<body>
+    <p>
+        <span th:if="${username} != null">Welcome <span th:text="${username}">username</span>.
+        </span>This is a placeholder for the blog.
+    </p>
+</body>
+</html>

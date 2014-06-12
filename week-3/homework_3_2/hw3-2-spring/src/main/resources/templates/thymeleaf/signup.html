@@ -1,0 +1,52 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml11-thymeleaf-spring4-2.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Sign Up</title>
+<style type="text/css">
+.label {
+	text-align: right
+}
+
+.error {
+	color: red
+}
+</style>
+
+</head>
+<body>
+    <p>
+        Already a user? <a href="/login">Login</a>
+    </p>
+    <h2>Signup</h2>
+    <form method="post" action="#" th:action="@{/signup}" th:object="${signupForm}">
+        <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}" class="error">Form Errors</p>
+        <table>
+            <tr>
+                <td class="label">Username</td>
+                <td><input type="text" th:field="*{username}" /></td>
+                <td th:if="${#fields.hasErrors('*{username}')}" th:errors="*{username}" class="error">Username Errors</td>
+            </tr>
+
+            <tr>
+                <td class="label">Password</td>
+                <td><input type="password" th:field="*{password}" /></td>
+                <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error">Password Errors</td>
+            </tr>
+
+            <tr>
+                <td class="label">Verify Password</td>
+                <td><input type="password" th:field="*{verify}" /></td>
+            </tr>
+
+            <tr>
+                <td class="label">Email (optional)</td>
+                <td><input type="text" th:field="*{email}" /></td>
+                <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error">Email Errors</td>
+            </tr>
+        </table>
+
+        <input type="submit" />
+    </form>
+</body>
+</html>
