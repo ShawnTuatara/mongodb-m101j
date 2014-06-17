@@ -2,15 +2,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Welcome</title>
+<title>Post not found</title>
 </head>
 <body>
     <div th:include="welcome-header :: welcome"></div>
-    <ul>
-        <li><a href="/" th:href="@{/}">Blog</a></li>
-        <li><a href="/logout" th:href="@{/logout}">Logout</a></li>
-        <li><a href="/newpost" th:href="@{/newpost}">Create a New Post</a></li>
-    </ul>
+    <p>Sorry, post not found</p>
 </body>
-
 </html>
+
+

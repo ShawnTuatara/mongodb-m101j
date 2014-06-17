@@ -51,17 +51,20 @@ public class BlogController {
 	public String blogEntry(@CookieValue(value = "session", required = false) String sessionId, @PathVariable String permalink, Model model) {
 		log.info("/post: get {}", permalink);
 
-		if (sessionId != null) {
-			String username = sessionManager.findUserNameBySessionId(sessionId);
-			model.addAttribute("username", username);
-		}
-
 		BlogEntry blogEntry = blogManager.findByPermalink(permalink);
 		if (blogEntry == null) {
 			return "redirect:/post_not_found";
 		}
 
+		if (sessionId != null) {
+			String username = sessionManager.findUserNameBySessionId(sessionId);
+			model.addAttribute("username", username);
+		}
+
 		model.addAttribute("blogEntry", blogEntry);
+		CommentForm commentForm = new CommentForm();
+		commentForm.setPermalink(permalink);
+		model.addAttribute("commentForm", commentForm);
 
 		return "blog-entry";
 	}
@@ -80,13 +83,16 @@ public class BlogController {
 		}
 		model.addAttribute("username", username);
 
+		model.addAttribute("blogEntryForm", new BlogEntryForm());
+
 		return "blog-entry-form";
 	}
 
 	@RequestMapping(value = { "/newpost", "/post" }, method = RequestMethod.POST)
 	public String blogEntrySubmission(@CookieValue(value = "session", required = false) String sessionId, @Valid BlogEntryForm blogEntryForm,
-			BindingResult bindingResult) {
+			BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("blogEntryForm", blogEntryForm);
 			return "blog-entry-form";
 		}
 
@@ -126,7 +132,12 @@ public class BlogController {
 	}
 
 	@RequestMapping("/post_not_found")
-	public String postNotFound() {
+	public String postNotFound(@CookieValue(value = "session", required = false) String sessionId, Model model) {
+		if (sessionId != null) {
+			String username = sessionManager.findUserNameBySessionId(sessionId);
+			model.addAttribute("username", username);
+		}
+
 		return "blog-entry-not-found";
 	}
 }

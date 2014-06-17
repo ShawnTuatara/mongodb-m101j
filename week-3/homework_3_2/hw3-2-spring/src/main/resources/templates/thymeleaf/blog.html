@@ -5,9 +5,14 @@
 <title>My Blog</title>
 </head>
 <body>
-    <p>
-        <span th:if="${username} != null">Welcome <span th:text="${username}">username</span>.
-        </span>This is a placeholder for the blog.
-    </p>
+    <div th:include="welcome-header :: welcome"></div>
+    <h1>My Blog</h1>
+
+    <div th:each="blogEntry: ${blogEntries}">
+        <h2>
+            <a href="#" th:href="@{/post/{permalink}(permalink=${blogEntry.permalink})}" th:text="${blogEntry.title}">Post Link</a>
+        </h2>
+        <div th:include="blog-entry :: blog-content"></div>
+    </div>
 </body>
 </html>

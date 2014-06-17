@@ -1,0 +1,49 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml11-thymeleaf-spring4-2.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Blog Post</title>
+</head>
+<body>
+    <div th:include="welcome-header :: welcome"></div>
+
+    <a href="/">Blog Home</a>
+
+    <br />
+    <br />
+
+    <h2 th:text="${blogEntry.title}">Blog Title</h2>
+    <div th:fragment="blog-content">
+        Posted <span th:text="${#calendars.format(blogEntry.postDate,'dd-MMM-yyyy HH:mm:ss')}">01-Jan-2014 01:01:01</span> <span
+            th:text="${'By ' + blogEntry.author}" style="font-style: italic">By Author</span><br /> Comments: <a href="#"
+            th:href="@{/post/${blogEntry.permalink}}" th:text="${blogEntry.comments != null} ? ${#lists.size(blogEntry.comments)} : 0">0</a>
+        <hr />
+        <span th:text="${blogEntry.body}">Body text</span> <br /> <br />
+        <div>
+            <span style="font-style: italic">Filed Under</span>: <span th:each="tag : ${blogEntry.tags}" th:text="${tag}">Tag </span>
+        </div>
+    </div>
+
+    <br />
+    <div th:fragment="blog-comments">
+        <p>Comments:</p>
+        <div th:each="comment: ${blogEntry.comments}">
+            Author: <span th:text="${comment.author}">Name Here</span> <br /> <span th:text="${comment.body}">Body Here</span>
+            <hr />
+        </div>
+    </div>
+
+    <h3>Add a comment</h3>
+
+    <form method="POST" action="#" th:action="@{/newcomment}" th:object="${commentForm}">
+        <p th:if="${#fields.hasErrors('global')}" th:errors="*{global}" class="error">Post Errors</p>
+        <input type="hidden" th:field="*{permalink}" /> <br /> <label th:for="${commentName}">Name</label> (required)<br /> <input type="text"
+            th:field="*{commentName}" size="60" /><br /> <label th:for="${commentEmail}">Email</label> (optional)<br /> <input type="text"
+            th:field="*{commentEmail}" size="60" /><br /> <label th:for="${commentBody}">Comment</label><br />
+        <textarea name="commentBody" cols="60" rows="10" th:field="*{commentBody}"></textarea>
+        <br /> <input type="submit" value="Submit" />
+    </form>
+</body>
+</html>
+
+

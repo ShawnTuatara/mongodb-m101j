@@ -1,0 +1,12 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml11-thymeleaf-spring4-2.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Welcome Header</title>
+</head>
+<body>
+    <div th:fragment="welcome" th:if="${username} != null">
+        Welcome <span th:text="${username}">username</span>  <a href="/logout" th:href="@{/logout}">Logout</a> | <a href="/newpost" th:href="@{/newpost}">New Post</a>
+    </div>
+</body>
+</html>
