@@ -1,5 +1,6 @@
 package course;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import course.dao.MongoBlogRespository;
 import course.model.BlogEntry;
+import course.model.Comment;
 
 @Service
 public class BlogManager {
@@ -37,5 +39,17 @@ public class BlogManager {
 		BlogEntry savedEntry = blogRepository.save(blogEntry);
 
 		return savedEntry.getPermalink();
+	}
+
+	public void addComment(String permalink, Comment comment) {
+		BlogEntry blogEntry = blogRepository.findByPermalink(permalink);
+		List<Comment> comments = blogEntry.getComments();
+		if (comments == null) {
+			comments = new ArrayList<Comment>();
+			blogEntry.setComments(comments);
+		}
+		comments.add(comment);
+
+		blogRepository.save(blogEntry);
 	}
 }

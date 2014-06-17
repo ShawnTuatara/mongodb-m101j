@@ -1,7 +1,7 @@
-M101J - Week 3 - Homework 3-2
+M101J - Week 3 - Homework 3-2 / 3-3
 
 # Notes
-Took the solution from hw2-3-spring as a starting point for this homework. Split out the @RequestMapping's into 3 controllers.
+Took the solution from hw2-3-spring as a starting point for this homework. Split out the @RequestMapping's into 3 controllers. As I am working with a MongoRepository it was straight forward to just add the comment to the existing document instead of trying to use the $push operation.
 
 # Included Spring Dependencies
 - Spring Boot Starter Web

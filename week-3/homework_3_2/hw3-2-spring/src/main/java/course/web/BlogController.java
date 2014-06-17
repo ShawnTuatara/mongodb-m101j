@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import course.BlogManager;
 import course.SessionManager;
 import course.model.BlogEntry;
+import course.model.Comment;
 import course.web.model.BlogEntryForm;
+import course.web.model.CommentForm;
 
 @Controller
 public class BlogController {
@@ -109,6 +111,18 @@ public class BlogController {
 		String permalink = blogManager.postBlogEntry(blogEntry);
 
 		return "redirect:/post/" + permalink;
+	}
+
+	@RequestMapping(value = "/newcomment", method = RequestMethod.POST)
+	public String commentSubmission(@Valid CommentForm commentForm, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "blog-entry";
+		}
+
+		Comment comment = new Comment(commentForm.getCommentName(), commentForm.getCommentEmail(), commentForm.getCommentBody());
+		blogManager.addComment(commentForm.getPermalink(), comment);
+
+		return "redirect:/post/" + commentForm.getPermalink();
 	}
 
 	@RequestMapping("/post_not_found")
